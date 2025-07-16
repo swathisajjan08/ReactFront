@@ -10,7 +10,7 @@ function App() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
+    console.log("hello")
     try {
       const response = await fetch(`https://api.mindstitch.in/loginpage`, {
         method: "POST",

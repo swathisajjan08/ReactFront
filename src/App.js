@@ -7,10 +7,12 @@ function App() {
   const [page, setPage] = useState("login"); //conditional rendering — to switch between login and plant-fetch pages
   const [plantId, setPlantId] = useState("");
   const [plantData, setPlantData] = useState(null);
+  const[loading,setLoading] = useState(false)
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    console.log("hello")
+    setLoading(true)
+
     try {
       const response = await fetch(`https://api.mindstitch.in/loginpage`, {
         method: "POST",
@@ -30,6 +32,8 @@ function App() {
       }
     } catch (error) {
       console.log(error.message);
+    } finally{
+      setLoading(false)
     }
   };
 
@@ -120,8 +124,8 @@ function App() {
                       required
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary w-100">
-                    Login Page
+                  <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+                    {loading ? "loading..":"login page"}
                   </button>
                 </form>
               </div>

@@ -14,7 +14,7 @@ function App() {
     setLoading(true)
 
     try {
-      const response = await fetch(`https://api.mindstitch.in/loginpage`, {
+      const response = await fetch(`http://localhost:4000/loginpage`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -39,9 +39,10 @@ function App() {
 
   const handleFetchPlant = async (event) => {
     event.preventDefault();
+    setLoading(true)
 
     try {
-      const response = await fetch(`https://api.mindstitch.in/plantid?id=${plantId}`);
+      const response = await fetch(`http://localhost:4000/plantid?id=${plantId}`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -53,6 +54,9 @@ function App() {
     } catch (error) {
       console.log(error);
       setPlantData(null);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -76,7 +80,9 @@ function App() {
                         required
                       />
                     </div>
-                    <button type="submit" className="btn btn-info w-100">Fetch</button>
+                    <button type="submit" className="btn btn-info w-100"disabled={loading}>
+                    {loading ? "fetching plant details...":"fetch"}
+                    </button>
                   </form>
 
                   {plantData && (
